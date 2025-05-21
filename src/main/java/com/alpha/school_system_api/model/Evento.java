@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,19 +20,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Aluno {
+public class Evento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(length = 60, nullable = false)
     private String nome;
+    private LocalDate data;
 
-    private String email;
-    
-    
-    @ManyToMany(mappedBy = "alunos")
-    private List<Evento> eventos = new ArrayList<>();
-
+    @ManyToMany
+    @JoinTable(
+        name = "evento_aluno",
+        joinColumns = @JoinColumn(name = "evento_id"),
+        inverseJoinColumns = @JoinColumn(name = "aluno_id")
+    )
+    private List<Aluno> alunos = new ArrayList<>();
 }
