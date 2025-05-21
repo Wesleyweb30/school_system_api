@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alpha.school_system_api.dtos.AlunoDTO;
 import com.alpha.school_system_api.model.Aluno;
 import com.alpha.school_system_api.repository.AlunoRepository;
 
@@ -25,7 +26,9 @@ public class AlunoController {
     }
 
     @GetMapping
-    public List<Aluno> listar() {
-        return alunoRepo.findAll();
+    public List<AlunoDTO> listar() {
+        return alunoRepo.findAll().stream()
+                .map(aluno -> new AlunoDTO(aluno.getId(), aluno.getNome(), aluno.getEmail()))
+                .toList();
     }
 }
