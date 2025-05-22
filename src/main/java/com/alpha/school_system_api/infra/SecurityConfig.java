@@ -28,8 +28,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()  // rotas públicas
-                .anyRequest().authenticated()             // todas as outras exigem token
+
+            .anyRequest().permitAll() // permite todas as rotas
+            
+                // .requestMatchers("/auth/**").permitAll()  // rotas públicas
+                // .anyRequest().authenticated()             // todas as outras exigem token
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
