@@ -12,11 +12,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Data 
 public class Escola {
 
     @Id
@@ -25,8 +27,14 @@ public class Escola {
 
     @Column(length = 60, nullable = false)
     private String nome;
+
+    @Column(length = 18, unique = true)
     private String cnpj;
+    
+    @Column(length = 20)
     private String telefone;
+    
+    @Column(length = 100)
     private String diretor;
 
      @ManyToMany(mappedBy = "escolas")
