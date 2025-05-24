@@ -9,7 +9,7 @@ import com.alpha.school_system_api.dtos.EscolaDTO;
 import com.alpha.school_system_api.model.Escola;
 import com.alpha.school_system_api.repository.EscolaRepository;
 
-import scala.collection.immutable.List;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
