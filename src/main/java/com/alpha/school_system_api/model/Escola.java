@@ -37,7 +37,4 @@ public class Escola {
     @Column(length = 100)
     private String diretor;
 
-     @ManyToMany(mappedBy = "escolas")
-    private List<Evento> eventos = new ArrayList<>();
-
 }
