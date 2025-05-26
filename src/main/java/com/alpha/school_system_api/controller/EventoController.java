@@ -7,6 +7,7 @@ import com.alpha.school_system_api.repository.AlunoRepository;
 import com.alpha.school_system_api.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -22,6 +23,7 @@ public class EventoController {
     @Autowired
     private AlunoRepository alunoRepo;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Evento criar(@RequestBody Evento evento) {
         return eventoRepository.save(evento);
@@ -34,6 +36,7 @@ public class EventoController {
                 .collect(Collectors.toList());
     }
 
+    // @PreAuthorize("hasRole('USUARIO')")
     @PostMapping("/{eventoId}/inscrever/{alunoId}")
     public ResponseEntity<?> inscrever(@PathVariable UUID eventoId, @PathVariable UUID alunoId) {
         Evento evento = eventoRepository.findById(eventoId).orElseThrow();
