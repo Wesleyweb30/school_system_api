@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,13 +28,13 @@ public class Evento {
     private UUID id;
 
     private String nome;
+
     private LocalDate data;
 
+    @Embedded
+    private Endereco endereco;
+
     @ManyToMany
-    @JoinTable(
-        name = "evento_aluno",
-        joinColumns = @JoinColumn(name = "evento_id"),
-        inverseJoinColumns = @JoinColumn(name = "aluno_id")
-    )
+    @JoinTable(name = "evento_aluno", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "aluno_id"))
     private List<Aluno> alunos = new ArrayList<>();
 }
