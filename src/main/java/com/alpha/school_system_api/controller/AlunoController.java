@@ -20,15 +20,15 @@ public class AlunoController {
     @Autowired
     private AlunoRepository alunoRepo;
 
-    @PostMapping
-    public Aluno criar(@RequestBody Aluno aluno) {
-        return alunoRepo.save(aluno);
-    }
+    // @PostMapping
+    // public Aluno criar(@RequestBody Aluno aluno) {
+    //     return alunoRepo.save(aluno);
+    // }
 
     @GetMapping
     public List<AlunoDTO> listar() {
         return alunoRepo.findAll().stream()
-                .map(aluno -> new AlunoDTO(aluno.getId(), aluno.getNome(), aluno.getEmail()))
+                .map(aluno -> new AlunoDTO(aluno.getId(), aluno.getNome()))
                 .toList();
     }
 }

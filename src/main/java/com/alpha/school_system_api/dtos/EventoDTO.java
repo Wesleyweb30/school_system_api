@@ -28,8 +28,10 @@ public class EventoDTO {
         this.data = evento.getData();
         this.endereco = evento.getEndereco();
         this.alunos = evento.getAlunos().stream()
-                .map(aluno -> new AlunoDTO(aluno.getId(), aluno.getNome(), aluno.getEmail()))
-                .collect(Collectors.toList());
+        .filter(aluno -> aluno.getUsuario() != null) // Evita erro de fetch
+        .map(aluno -> new AlunoDTO(aluno.getId(), aluno.getNome()))
+        .collect(Collectors.toList());
+
     }
 
 }

@@ -29,9 +29,9 @@ public class EventoController {
 
     @Autowired
     private ViaCepService viaCepService;
-
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> criarEvento(@RequestBody EventoRequest req) {
         try {
             Evento evento = new Evento();
@@ -63,6 +63,7 @@ public class EventoController {
         }
     }
 
+    @PreAuthorize("hasRole('USUARIO')")
     @GetMapping
     public List<EventoDTO> listar() {
         return eventoRepository.findAll().stream()
@@ -70,7 +71,7 @@ public class EventoController {
                 .collect(Collectors.toList());
     }
 
-    // @PreAuthorize("hasRole('USUARIO')")
+    @PreAuthorize("hasRole('USUARIO')")
     @PostMapping("/{eventoId}/inscrever/{alunoId}")
     public ResponseEntity<?> inscrever(@PathVariable UUID eventoId, @PathVariable UUID alunoId) {
         Evento evento = eventoRepository.findById(eventoId).orElseThrow();

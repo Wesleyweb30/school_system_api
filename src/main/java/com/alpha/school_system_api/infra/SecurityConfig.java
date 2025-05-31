@@ -1,4 +1,5 @@
 package com.alpha.school_system_api.infra;
+
 import com.alpha.school_system_api.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,14 +28,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-
-            .anyRequest().permitAll() // permite todas as rotas
-            
-                // .requestMatchers("/auth/**").permitAll()  // rotas públicas
-                // .anyRequest().authenticated()             // todas as outras exigem token
-            )
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll() // rotas públicas
+                        .anyRequest().authenticated() // todas as outras exigem token
+                        // .anyRequest().permitAll()
+                         // permite todas as rotas
+                )
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

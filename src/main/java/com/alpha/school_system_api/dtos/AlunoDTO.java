@@ -10,5 +10,4 @@ import lombok.Data;
 public class AlunoDTO {
     private UUID id;
     private String nome;
-    private String email;
 }
