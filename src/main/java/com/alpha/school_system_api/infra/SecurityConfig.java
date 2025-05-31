@@ -1,5 +1,7 @@
 package com.alpha.school_system_api.infra;
 
+import com.alpha.school_system_api.infra.error.CustomAccessDeniedHandler;
+import com.alpha.school_system_api.infra.error.CustomAuthenticationEntryPoint;
 import com.alpha.school_system_api.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +36,9 @@ public class SecurityConfig {
                         // .anyRequest().permitAll()
                          // permite todas as rotas
                 )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                        .accessDeniedHandler(new CustomAccessDeniedHandler()))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
