@@ -1,11 +1,11 @@
-package com.alpha.school_system_api.dtos;
+package com.alpha.school_system_api.dtos.aluno;
 
 import java.time.LocalDate;
 
 import lombok.Data;
 
 @Data
-public class AlunoRegisterRequest {
+public class RequestRegisterAluno {
     private String nome;
     private String email;
     private String senha;

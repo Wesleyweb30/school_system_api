@@ -1,4 +1,4 @@
-package com.alpha.school_system_api.model.user;
+package com.alpha.school_system_api.security;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.alpha.school_system_api.model.usuario.Usuario;
 
 public class UsuarioDetails implements UserDetails {
 

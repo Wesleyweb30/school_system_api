@@ -1,7 +1,8 @@
-package com.alpha.school_system_api.infra;
+package com.alpha.school_system_api.config;
 
-import com.alpha.school_system_api.infra.error.CustomAccessDeniedHandler;
-import com.alpha.school_system_api.infra.error.CustomAuthenticationEntryPoint;
+import com.alpha.school_system_api.exception.CustomAccessDeniedHandler;
+import com.alpha.school_system_api.exception.CustomAuthenticationEntryPoint;
+import com.alpha.school_system_api.security.JwtFilter;
 import com.alpha.school_system_api.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll() // rotas públicas
+                        .requestMatchers("/auth/**", "/escolas").permitAll() // rotas públicas
                         .anyRequest().authenticated() // todas as outras exigem token
                         // .anyRequest().permitAll()
                          // permite todas as rotas

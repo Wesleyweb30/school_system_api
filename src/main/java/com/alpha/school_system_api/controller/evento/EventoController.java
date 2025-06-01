@@ -1,17 +1,21 @@
-package com.alpha.school_system_api.controller;
+package com.alpha.school_system_api.controller.evento;
 
-import com.alpha.school_system_api.dtos.EventoDTO;
-import com.alpha.school_system_api.dtos.EventoRequest;
+import com.alpha.school_system_api.dtos.evento.EventoDTO;
+import com.alpha.school_system_api.dtos.evento.RequestRegisterEvento;
 import com.alpha.school_system_api.model.Aluno;
 import com.alpha.school_system_api.model.Endereco;
 import com.alpha.school_system_api.model.Evento;
+import com.alpha.school_system_api.model.usuario.TipoUsuario;
+import com.alpha.school_system_api.model.usuario.Usuario;
 import com.alpha.school_system_api.repository.AlunoRepository;
 import com.alpha.school_system_api.repository.EventoRepository;
+import com.alpha.school_system_api.repository.UsuarioRepository;
 import com.alpha.school_system_api.service.ViaCepService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -29,16 +33,19 @@ public class EventoController {
 
     @Autowired
     private ViaCepService viaCepService;
-    
+
+    @Autowired
+    private UsuarioRepository usuarioRepo;
+
+    // ✅ Apenas ADMIN pode criar evento
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> criarEvento(@RequestBody EventoRequest req) {
+    public ResponseEntity<?> criarEvento(@RequestBody RequestRegisterEvento req) {
         try {
             Evento evento = new Evento();
             evento.setNome(req.getNome());
             evento.setData(req.getData());
 
-            // Busca endereço no ViaCEP
             Map<String, String> dados = viaCepService.buscarEnderecoPorCep(req.getCep());
 
             Endereco endereco = new Endereco();
@@ -63,19 +70,33 @@ public class EventoController {
         }
     }
 
-    @PreAuthorize("hasRole('USUARIO')")
+    // ✅ Usuários autenticados podem listar eventos
+    @PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
     @GetMapping
     public List<EventoDTO> listar() {
         return eventoRepository.findAll().stream()
-                .map(evento -> new EventoDTO(evento))
+                .map(EventoDTO::new)
                 .collect(Collectors.toList());
     }
 
+    // ✅ Apenas USUARIO pode se inscrever (aluno logado)
     @PreAuthorize("hasRole('USUARIO')")
-    @PostMapping("/{eventoId}/inscrever/{alunoId}")
-    public ResponseEntity<?> inscrever(@PathVariable UUID eventoId, @PathVariable UUID alunoId) {
-        Evento evento = eventoRepository.findById(eventoId).orElseThrow();
-        Aluno aluno = alunoRepo.findById(alunoId).orElseThrow();
+    @PostMapping("/{eventoId}/inscrever")
+    public ResponseEntity<?> inscrever(@PathVariable UUID eventoId, Authentication authentication) {
+        String email = authentication.getName();
+
+        Usuario usuario = usuarioRepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (!usuario.getTipo().equals(TipoUsuario.ALUNO)) {
+            return ResponseEntity.status(403).body("Apenas alunos podem se inscrever.");
+        }
+
+        Aluno aluno = alunoRepo.findByUsuario(usuario)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        Evento evento = eventoRepository.findById(eventoId)
+                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
 
         if (!evento.getAlunos().contains(aluno)) {
             evento.getAlunos().add(aluno);

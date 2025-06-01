@@ -1,12 +1,11 @@
-package com.alpha.school_system_api.controller;
+package com.alpha.school_system_api.controller.escola;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alpha.school_system_api.dtos.EscolaDTO;
-
+import com.alpha.school_system_api.dtos.escola.EscolaDTO;
 import com.alpha.school_system_api.repository.EscolaRepository;
 
 import java.util.List;
@@ -27,12 +26,13 @@ public class EscolaController {
     //     return escolaRepository.save(escola);
     // } 
 
+
     @GetMapping
     public List<EscolaDTO>listar(){
         return escolaRepository.findAll().stream()
             .map(escola -> new EscolaDTO(escola.getId(), escola.getNome(), escola.getCnpj(), escola.getTelefone(), escola.getDiretor()))
             .toList();
-    }    
+    }
 
 
 }

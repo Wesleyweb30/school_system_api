@@ -1,6 +1,6 @@
-package com.alpha.school_system_api.dtos;
+package com.alpha.school_system_api.dtos.evento;
 
-import com.alpha.school_system_api.model.Aluno;
+import com.alpha.school_system_api.dtos.aluno.AlunoDTO;
 import com.alpha.school_system_api.model.Endereco;
 import com.alpha.school_system_api.model.Evento;
 
@@ -29,7 +29,7 @@ public class EventoDTO {
         this.endereco = evento.getEndereco();
         this.alunos = evento.getAlunos().stream()
         .filter(aluno -> aluno.getUsuario() != null) // Evita erro de fetch
-        .map(aluno -> new AlunoDTO(aluno.getId(), aluno.getNome()))
+        .map(aluno -> new AlunoDTO(aluno.getId(), aluno.getNome(), aluno.getEmail()))
         .collect(Collectors.toList());
 
     }

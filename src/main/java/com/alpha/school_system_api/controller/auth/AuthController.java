@@ -1,4 +1,4 @@
-package com.alpha.school_system_api.controller;
+package com.alpha.school_system_api.controller.auth;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,21 +12,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.alpha.school_system_api.dtos.AlunoRegisterRequest;
-import com.alpha.school_system_api.dtos.AuthRequest;
-import com.alpha.school_system_api.dtos.AuthResponse;
-import com.alpha.school_system_api.dtos.RegisterEscolaRequest;
-import com.alpha.school_system_api.dtos.UsuarioResponseDTO;
-import com.alpha.school_system_api.infra.JwtUtil;
+import com.alpha.school_system_api.dtos.aluno.RequestRegisterAluno;
+import com.alpha.school_system_api.dtos.auth.RequestAuth;
+import com.alpha.school_system_api.dtos.auth.ResponseAuth;
+import com.alpha.school_system_api.dtos.escola.RequestRegisterEscola;
+import com.alpha.school_system_api.dtos.usuario.ResponseUsuarioDTO;
 import com.alpha.school_system_api.model.Aluno;
 import com.alpha.school_system_api.model.Escola;
-import com.alpha.school_system_api.model.user.Role;
-import com.alpha.school_system_api.model.user.TipoUsuario;
-import com.alpha.school_system_api.model.user.Usuario;
+import com.alpha.school_system_api.model.usuario.Role;
+import com.alpha.school_system_api.model.usuario.TipoUsuario;
+import com.alpha.school_system_api.model.usuario.Usuario;
 import com.alpha.school_system_api.repository.AlunoRepository;
 import com.alpha.school_system_api.repository.EscolaRepository;
 import com.alpha.school_system_api.repository.RoleRepository;
 import com.alpha.school_system_api.repository.UsuarioRepository;
+import com.alpha.school_system_api.security.JwtUtil;
 
 @RestController
 @RequestMapping("/auth")
@@ -54,7 +54,7 @@ public class AuthController {
     private EscolaRepository escolaRepo;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> login(@RequestBody RequestAuth request) {
         try {
             Authentication authentication = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha()));
@@ -62,7 +62,7 @@ public class AuthController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String token = jwtUtil.gerarToken(userDetails);
 
-            return ResponseEntity.ok(new AuthResponse(token));
+            return ResponseEntity.ok(new ResponseAuth(token));
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
@@ -70,7 +70,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/aluno")
-    public ResponseEntity<?> registrarAluno(@RequestBody AlunoRegisterRequest request) {
+    public ResponseEntity<?> registrarAluno(@RequestBody RequestRegisterAluno request) {
 
         if (usuarioRepo.findByEmail(request.getEmail()).isPresent()) {
             return ResponseEntity.status(409).body("E-mail já cadastrado.");
@@ -101,7 +101,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/escola")
-    public ResponseEntity<?> registrarEscola(@RequestBody RegisterEscolaRequest request) {
+    public ResponseEntity<?> registrarEscola(@RequestBody RequestRegisterEscola request) {
         if (usuarioRepo.findByEmail(request.getEmail()).isPresent()) {
             return ResponseEntity.status(409).body("E-mail já cadastrado.");
         }
@@ -144,7 +144,7 @@ public class AuthController {
                 .map(Role::getNome)
                 .collect(Collectors.toSet());
 
-        UsuarioResponseDTO response = new UsuarioResponseDTO(
+        ResponseUsuarioDTO response = new ResponseUsuarioDTO(
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),

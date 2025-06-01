@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.alpha.school_system_api.model.user.Usuario;
-import com.alpha.school_system_api.model.user.UsuarioDetails;
+import com.alpha.school_system_api.model.usuario.Usuario;
 import com.alpha.school_system_api.repository.UsuarioRepository;
+import com.alpha.school_system_api.security.UsuarioDetails;
 
 @Service
 public class UsuarioService implements UserDetailsService {

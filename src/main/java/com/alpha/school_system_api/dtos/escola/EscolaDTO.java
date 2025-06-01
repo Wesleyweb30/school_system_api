@@ -1,4 +1,4 @@
-package com.alpha.school_system_api.dtos;
+package com.alpha.school_system_api.dtos.escola;
 
 
 import java.util.UUID;

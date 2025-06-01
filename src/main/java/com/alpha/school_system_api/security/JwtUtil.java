@@ -1,4 +1,4 @@
-package com.alpha.school_system_api.infra;
+package com.alpha.school_system_api.security;
 
 import java.security.Key;
 import java.util.Date;

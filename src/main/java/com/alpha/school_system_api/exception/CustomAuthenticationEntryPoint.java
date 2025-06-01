@@ -1,4 +1,4 @@
-package com.alpha.school_system_api.infra.error;
+package com.alpha.school_system_api.exception;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
