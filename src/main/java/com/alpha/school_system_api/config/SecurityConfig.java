@@ -3,7 +3,6 @@ package com.alpha.school_system_api.config;
 import com.alpha.school_system_api.exception.CustomAccessDeniedHandler;
 import com.alpha.school_system_api.exception.CustomAuthenticationEntryPoint;
 import com.alpha.school_system_api.security.JwtFilter;
-import com.alpha.school_system_api.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
@@ -21,11 +20,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
-    private final UsuarioService usuarioService;
 
-    public SecurityConfig(JwtFilter jwtFilter, UsuarioService usuarioService) {
+    public SecurityConfig(JwtFilter jwtFilter) {
         this.jwtFilter = jwtFilter;
-        this.usuarioService = usuarioService;
     }
 
     @Bean
@@ -35,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**", "/escolas").permitAll() // rotas públicas
                         .anyRequest().authenticated() // todas as outras exigem token
                         // .anyRequest().permitAll()
-                         // permite todas as rotas
+                        //  permite todas as rotas
                 )
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
