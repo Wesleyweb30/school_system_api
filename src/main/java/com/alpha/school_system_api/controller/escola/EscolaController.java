@@ -1,38 +1,46 @@
 package com.alpha.school_system_api.controller.escola;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alpha.school_system_api.dtos.escola.EscolaDTO;
-import com.alpha.school_system_api.repository.EscolaRepository;
+import com.alpha.school_system_api.dtos.escola.RequestUpdateEscolaDTO;
+import com.alpha.school_system_api.service.EscolaService;
 
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
-
-
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping ("/escolas")
+@RequestMapping("/escolas")
 public class EscolaController {
 
     @Autowired
-    private EscolaRepository escolaRepository;
-
-    // @PostMapping    
-    // public Escola criar(@RequestBody Escola escola){
-    //     return escolaRepository.save(escola);
-    // } 
-
+    private EscolaService escolaService;
 
     @GetMapping
-    public List<EscolaDTO>listar(){
-        return escolaRepository.findAll().stream()
-            .map(escola -> new EscolaDTO(escola.getId(), escola.getNome(), escola.getCnpj(), escola.getTelefone(), escola.getDiretor()))
-            .toList();
+    public ResponseEntity<List<EscolaDTO>> listar() {
+        try {
+            List<EscolaDTO> escolas = escolaService.listarTodas();
+            return ResponseEntity.ok(escolas);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/me")
+    public ResponseEntity<?> atualizarEscola(Authentication authentication,
+            @RequestBody RequestUpdateEscolaDTO request) {
+        String emailUsuario = authentication.getName();
+        EscolaDTO atualizada = escolaService.atualizar(emailUsuario, request);
+        return ResponseEntity.ok(atualizada);
+    }
 
 }

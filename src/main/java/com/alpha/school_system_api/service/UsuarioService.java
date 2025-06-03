@@ -22,4 +22,9 @@ public class UsuarioService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
         return new UsuarioDetails(usuario);
     }
+
+    public void atualizarUsuario(Usuario usuario) {
+        usuarioRepo.save(usuario);
+    }
+
 }

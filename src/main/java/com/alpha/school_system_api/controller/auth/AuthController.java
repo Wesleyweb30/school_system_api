@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.alpha.school_system_api.dtos.aluno.RequestRegisterAluno;
+import com.alpha.school_system_api.dtos.aluno.RequestRegisterAlunoDTO;
 import com.alpha.school_system_api.dtos.auth.RequestAuth;
 import com.alpha.school_system_api.dtos.auth.ResponseAuth;
 import com.alpha.school_system_api.dtos.escola.RequestRegisterEscola;
@@ -70,7 +70,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/aluno")
-    public ResponseEntity<?> registrarAluno(@RequestBody RequestRegisterAluno request) {
+    public ResponseEntity<?> registrarAluno(@RequestBody RequestRegisterAlunoDTO request) {
 
         if (usuarioRepo.findByEmail(request.getEmail()).isPresent()) {
             return ResponseEntity.status(409).body("E-mail já cadastrado.");
