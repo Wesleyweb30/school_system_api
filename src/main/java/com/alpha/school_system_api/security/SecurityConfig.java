@@ -1,8 +1,8 @@
-package com.alpha.school_system_api.config;
+package com.alpha.school_system_api.security;
 
 import com.alpha.school_system_api.exception.CustomAccessDeniedHandler;
 import com.alpha.school_system_api.exception.CustomAuthenticationEntryPoint;
-import com.alpha.school_system_api.security.JwtFilter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
