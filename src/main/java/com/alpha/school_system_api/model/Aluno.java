@@ -33,7 +33,7 @@ public class Aluno {
     private String nome;
 
     private LocalDate dataNascimento;
-
+    
     private String email;
 
     @OneToOne
