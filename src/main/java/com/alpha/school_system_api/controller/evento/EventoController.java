@@ -43,6 +43,19 @@ public class EventoController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USUARIO')")
+    @GetMapping("/{eventoId}")
+    public ResponseEntity<?> buscarEventoPorId(@PathVariable UUID eventoId) {
+        try {
+            EventoDTO evento = eventoService.buscarEventoPorId(eventoId);
+            return ResponseEntity.ok(evento);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body("Evento não encontrado.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao buscar evento.");
+        }
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USUARIO')")
     @GetMapping("/por-escola")
     public ResponseEntity<?> listarEventosPorEscola(
             @RequestParam(required = false) UUID id,
@@ -82,4 +95,17 @@ public class EventoController {
             return ResponseEntity.status(500).body("Erro ao atualizar evento.");
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/me")
+    public ResponseEntity<?> listarEventosDaEscolaAutenticada(Authentication authentication) {
+        try {
+            String emailEscola = authentication.getName();
+            List<EventoDTO> eventos = eventoService.listarEventosPorEscola(Optional.empty(), Optional.of(emailEscola));
+            return ResponseEntity.ok(eventos);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao buscar eventos da escola.");
+        }
+    }
+
 }
