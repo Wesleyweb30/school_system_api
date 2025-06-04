@@ -83,6 +83,13 @@ public class EventoService {
                 .collect(Collectors.toList());
     }
 
+    public EventoDTO buscarEventoPorId(UUID eventoId) {
+    Evento evento = eventoRepository.findById(eventoId)
+            .orElseThrow(() -> new NoSuchElementException("Evento não encontrado."));
+    return new EventoDTO(evento);
+}
+
+
     public void inscreverAluno(UUID eventoId, String email) {
         Usuario usuario = usuarioRepo.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
