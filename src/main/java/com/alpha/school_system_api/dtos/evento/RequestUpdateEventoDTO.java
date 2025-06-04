@@ -1,15 +1,13 @@
-package com.alpha.school_system_api.dtos;
+package com.alpha.school_system_api.dtos.evento;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import lombok.Data;
 
 @Data
-public class EventoRequest {
+public class RequestUpdateEventoDTO {
     private String nome;
     private LocalDate data;
-
     private String cep;
     private String numero;
     private String referencia;

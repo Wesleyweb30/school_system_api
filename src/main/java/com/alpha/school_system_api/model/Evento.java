@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,10 @@ public class Evento {
     @Embedded
     private Endereco endereco;
 
+    @ManyToOne
+    @JoinColumn(name = "escola_id", nullable = false)
+    private Escola escola;
+    
     @ManyToMany
     @JoinTable(name = "evento_aluno", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "aluno_id"))
     private List<Aluno> alunos = new ArrayList<>();

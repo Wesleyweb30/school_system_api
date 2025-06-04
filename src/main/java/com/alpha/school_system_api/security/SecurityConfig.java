@@ -1,5 +1,8 @@
-package com.alpha.school_system_api.infra;
-import com.alpha.school_system_api.service.UsuarioService;
+package com.alpha.school_system_api.security;
+
+import com.alpha.school_system_api.exception.CustomAccessDeniedHandler;
+import com.alpha.school_system_api.exception.CustomAuthenticationEntryPoint;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
@@ -17,24 +20,24 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
-    private final UsuarioService usuarioService;
 
-    public SecurityConfig(JwtFilter jwtFilter, UsuarioService usuarioService) {
+    public SecurityConfig(JwtFilter jwtFilter) {
         this.jwtFilter = jwtFilter;
-        this.usuarioService = usuarioService;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-
-            .anyRequest().permitAll() // permite todas as rotas
-            
-                // .requestMatchers("/auth/**").permitAll()  // rotas públicas
-                // .anyRequest().authenticated()             // todas as outras exigem token
-            )
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**", "/escolas").permitAll() // rotas públicas
+                        .anyRequest().authenticated() // todas as outras exigem token
+                        // .anyRequest().permitAll()
+                        //  permite todas as rotas
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                        .accessDeniedHandler(new CustomAccessDeniedHandler()))
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

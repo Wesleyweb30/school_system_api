@@ -1,9 +1,9 @@
-package com.alpha.school_system_api.infra;
+package com.alpha.school_system_api.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.alpha.school_system_api.model.user.Role;
+import com.alpha.school_system_api.model.usuario.Role;
 import com.alpha.school_system_api.repository.RoleRepository;
 
 @Component
