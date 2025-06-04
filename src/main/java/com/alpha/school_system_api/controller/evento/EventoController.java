@@ -2,6 +2,7 @@ package com.alpha.school_system_api.controller.evento;
 
 import com.alpha.school_system_api.dtos.evento.EventoDTO;
 import com.alpha.school_system_api.dtos.evento.RequestRegisterEvento;
+import com.alpha.school_system_api.dtos.evento.RequestUpdateEventoDTO;
 import com.alpha.school_system_api.service.EventoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class EventoController {
         return ResponseEntity.ok(eventoService.listarEventos());
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USUARIO')")
     @GetMapping("/por-escola")
     public ResponseEntity<?> listarEventosPorEscola(
             @RequestParam(required = false) UUID id,
@@ -63,6 +65,21 @@ public class EventoController {
             return ResponseEntity.ok("Aluno inscrito com sucesso.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(403).body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/{eventoId}")
+    public ResponseEntity<?> atualizarEvento(@PathVariable UUID eventoId,
+            @RequestBody RequestUpdateEventoDTO request,
+            Authentication authentication) {
+        try {
+            eventoService.atualizarEvento(eventoId, authentication.getName(), request);
+            return ResponseEntity.ok("Evento atualizado com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(403).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao atualizar evento.");
         }
     }
 }

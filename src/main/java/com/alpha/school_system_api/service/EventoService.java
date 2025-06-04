@@ -2,6 +2,7 @@ package com.alpha.school_system_api.service;
 
 import com.alpha.school_system_api.dtos.evento.EventoDTO;
 import com.alpha.school_system_api.dtos.evento.RequestRegisterEvento;
+import com.alpha.school_system_api.dtos.evento.RequestUpdateEventoDTO;
 import com.alpha.school_system_api.model.*;
 import com.alpha.school_system_api.model.usuario.TipoUsuario;
 import com.alpha.school_system_api.model.usuario.Usuario;
@@ -100,5 +101,24 @@ public class EventoService {
             evento.getAlunos().add(aluno);
             eventoRepository.save(evento);
         }
+    }
+
+    public void atualizarEvento(UUID eventoId, String emailEscola, RequestUpdateEventoDTO req) {
+        Evento evento = eventoRepository.findById(eventoId)
+                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+
+        // Valida se quem está tentando editar é a escola criadora
+        if (!evento.getEscola().getUsuario().getEmail().equals(emailEscola)) {
+            throw new RuntimeException("Você não tem permissão para atualizar este evento.");
+        }
+
+        // Atualização apenas dos campos permitidos
+        if (req.getNome() != null) evento.setNome(req.getNome());
+        if (req.getData() != null) evento.setData(req.getData());
+        if (req.getCep() != null) evento.getEndereco().setCep(req.getCep());
+        if (req.getNumero() != null) evento.getEndereco().setNumero(req.getNumero());
+        if (req.getReferencia() != null) evento.getEndereco().setReferencia(req.getReferencia());
+
+        eventoRepository.save(evento);
     }
 }
