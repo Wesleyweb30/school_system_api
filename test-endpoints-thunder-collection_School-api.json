@@ -1,0 +1,282 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "School-api",
+    "collectionId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+    "dateExported": "2025-06-04T02:12:46.491Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "997c2dcb-4c96-4287-9482-2a8438ee0c85",
+            "name": "Auth",
+            "containerId": "",
+            "created": "2025-05-31T18:22:07.603Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "2979fa46-04a7-4a40-bf39-32d98b4fedae",
+            "name": "Evento",
+            "containerId": "",
+            "created": "2025-05-31T18:28:25.423Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "1bb9399f-c225-401d-8f61-a5df23a2ec66",
+            "name": "Escola",
+            "containerId": "",
+            "created": "2025-05-31T18:59:33.893Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "9522c0f3-fe29-49d0-8bf7-527c9449ffe1",
+            "name": "Aluno",
+            "containerId": "",
+            "created": "2025-06-01T12:35:21.820Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "742aec52-4e2a-4a76-bb7d-a1f946461cca",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "997c2dcb-4c96-4287-9482-2a8438ee0c85",
+            "name": "Registrar Aluno",
+            "url": "http://localhost:8080/auth/register/aluno",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2025-05-31T18:22:16.884Z",
+            "modified": "2025-06-03T03:52:07.712Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\" : \"Aluno Silva 2\",\n  \"email\" : \"aluno2@aluno.com\",\n  \"senha\" : \"12345\",\n  \"dataNascimento\" : \"1998-07-21\" \n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "e13ea321-3344-4ef8-881f-f078155dec93",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "997c2dcb-4c96-4287-9482-2a8438ee0c85",
+            "name": "Login",
+            "url": "http://localhost:8080/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2025-05-31T18:27:29.979Z",
+            "modified": "2025-06-04T02:05:19.889Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\" : \"escola@escola.com\",\n  \"senha\" : \"12345\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "1245f444-b494-417b-b4c9-be4e73d94724",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "2979fa46-04a7-4a40-bf39-32d98b4fedae",
+            "name": "Listar Evento Por Escola(Email)",
+            "url": "http://localhost:8080/eventos/por-escola?email=escola@escola.com",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2025-06-04T01:39:52.296Z",
+            "modified": "2025-06-04T01:45:27.766Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "email",
+                    "value": "escola@escola.com",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbHVubzJAYWx1bm8uY29tIiwicm9sZXMiOlsiUk9MRV9VU1VBUklPIl0sImlhdCI6MTc0OTAwMTE3NiwiZXhwIjoxNzQ5MDM3MTc2fQ.kwDuabvgdW5Xefk5Fp5aFip1n1y7rgEgb-xAdbe9qR8"
+            }
+        },
+        {
+            "_id": "9ff84129-7f3a-4868-9e01-985fc1a00422",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "2979fa46-04a7-4a40-bf39-32d98b4fedae",
+            "name": "Listar Eventos",
+            "url": "http://localhost:8080/eventos",
+            "method": "GET",
+            "sortNum": 42500,
+            "created": "2025-05-31T18:28:36.223Z",
+            "modified": "2025-06-04T02:07:39.879Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Feira Cultural 2025\",\n  \"data\": \"2025-09-20\",\n  \"cep\": \"50720355\",\n  \"numero\": \"456\",\n  \"referencia\": \"Ao lado da biblioteca\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc2NvbGFAZXNjb2xhLmNvbSIsInJvbGVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNzQ5MDAwNzE2LCJleHAiOjE3NDkwMzY3MTZ9.koO2G2TdyHlZdUvtXydiPQaOjCAP6Av547NIb6rzl-E\""
+            }
+        },
+        {
+            "_id": "0ed47072-5b5c-4d8e-b27b-9b8c71d8cded",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "2979fa46-04a7-4a40-bf39-32d98b4fedae",
+            "name": "Listar Evento Por Escola(ID)",
+            "url": "",
+            "method": "GET",
+            "sortNum": 45000,
+            "created": "2025-06-04T01:45:13.879Z",
+            "modified": "2025-06-04T01:45:13.879Z",
+            "headers": []
+        },
+        {
+            "_id": "54b56b14-29d9-4069-8c42-2b4930d640e0",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "2979fa46-04a7-4a40-bf39-32d98b4fedae",
+            "name": "Registrar Evento",
+            "url": "http://localhost:8080/eventos",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2025-05-31T18:49:03.080Z",
+            "modified": "2025-06-04T01:32:12.106Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\" : \"Torneio de Xadrez\",\n  \"data\" : \"2025-06-01\",\n  \"cep\" : \"50720355\",\n  \"numero\" : \"190\",\n  \"referencia\" : \"No Auditorio 1B\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc2NvbGFAZXNjb2xhLmNvbSIsInJvbGVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNzQ5MDAwNzE2LCJleHAiOjE3NDkwMzY3MTZ9.koO2G2TdyHlZdUvtXydiPQaOjCAP6Av547NIb6rzl-E"
+            }
+        },
+        {
+            "_id": "ffe2b58e-b8e9-48c8-8a0d-fe7650456bab",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "997c2dcb-4c96-4287-9482-2a8438ee0c85",
+            "name": "Registrar Escola",
+            "url": "http://localhost:8080/auth/register/escola",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2025-05-31T18:53:49.613Z",
+            "modified": "2025-06-02T12:27:23.894Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\" : \"Escola de Referência 1\",\n  \"email\": \"escola@escola.com\",\n  \"senha\" : \"12345\",\n  \"cnpj\" : \"876581728376281123\",\n  \"telefone\" : \"81931313131\",\n  \"diretor\" : \"Maria\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "035d432d-8847-46f0-a98d-190abb6c3083",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "1bb9399f-c225-401d-8f61-a5df23a2ec66",
+            "name": "Listar Escola",
+            "url": "http://localhost:8080/escolas",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2025-05-31T18:59:46.427Z",
+            "modified": "2025-06-01T12:58:47.930Z",
+            "headers": []
+        },
+        {
+            "_id": "64290345-97ab-44b5-a204-53a68cea7ac6",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "997c2dcb-4c96-4287-9482-2a8438ee0c85",
+            "name": "Me",
+            "url": "http://localhost:8080/auth/me",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2025-06-01T12:25:34.933Z",
+            "modified": "2025-06-03T03:37:15.872Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "package com.alpha.school_system_api.service; import com.alpha.school_system_api.dtos.escola.RequestUpdateEscolaDTO; import com.alpha.school_system_api.dtos.escola.EscolaDTO; import com.alpha.school_system_api.model.Escola; import com.alpha.school_system_api.model.usuario.Usuario; import com.alpha.school_system_api.repository.EscolaRepository; import java.util.List; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.security.crypto.password.PasswordEncoder; import org.springframework.stereotype.Service; @Service public class EscolaService { @Autowired private EscolaRepository escolaRepo; @Autowired private UsuarioService usuarioService; @Autowired private PasswordEncoder passwordEncoder; public List<EscolaDTO> listarTodas() { return escolaRepo.findAll().stream() .map(escola -> new EscolaDTO(escola.getId(), escola.getNome(), escola.getCnpj(), escola.getTelefone(), escola.getDiretor())) .toList(); } public EscolaDTO atualizar(String emailUsuario, RequestUpdateEscolaDTO request) { Escola escola = escolaRepo.findByUsuarioEmail(emailUsuario) .orElseThrow(() -> new RuntimeException(\"Escola não encontrada\")); Usuario usuario = escola.getUsuario(); if (!passwordEncoder.matches(request.getSenhaAtual(), usuario.getSenha())) { throw new RuntimeException(\"Senha Atual incorreta\"); } escola.setNome(request.getNome()); escola.setCnpj(request.getCnpj()); escola.setTelefone(request.getTelefone()); escola.setDiretor(request.getDiretor()); usuario.setEmail(request.getEmail()); usuario.setSenha(passwordEncoder.encode(request.getSenhaNova())); escolaRepo.save(escola); usuarioService.atualizarUsuario(usuario); return new EscolaDTO(escola.getId(), escola.getNome(), escola.getCnpj(), escola.getTelefone(), escola.getDiretor()); } }"
+            }
+        },
+        {
+            "_id": "7ced4d61-e1e1-46eb-804b-b042dd5c6992",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "2979fa46-04a7-4a40-bf39-32d98b4fedae",
+            "name": "Inscrever-se Evento",
+            "url": "http://localhost:8080/eventos/e74cc331-3bcb-44c1-9296-9337e46e2246/inscrever",
+            "method": "POST",
+            "sortNum": 90000,
+            "created": "2025-06-01T12:29:03.281Z",
+            "modified": "2025-06-04T00:32:11.694Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbHVubzJAYWx1bm8uY29tIiwicm9sZXMiOlsiUk9MRV9VU1VBUklPIl0sImlhdCI6MTc0ODk5NzEwNSwiZXhwIjoxNzQ5MDMzMTA1fQ.PRaD7Jf4vgFrZ76qqRGR4wTRRdOFFMBB2iKqAx8xOWg"
+            }
+        },
+        {
+            "_id": "27b5302b-a8cf-490a-8e75-80ab20987411",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "9522c0f3-fe29-49d0-8bf7-527c9449ffe1",
+            "name": "Listar Aluno",
+            "url": "http://localhost:8080/alunos",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2025-06-01T12:35:29.493Z",
+            "modified": "2025-06-04T00:31:26.475Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc2NvbGFAZXNjb2xhLmNvbSIsInJvbGVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNzQ4OTk3MDgwLCJleHAiOjE3NDkwMzMwODB9.XQ_-bBjLoM65lu2jzltZxukZDlyD-IYHd50hwSctzAQ"
+            }
+        },
+        {
+            "_id": "1c2898f5-09d6-4e5f-a5a1-1e338ce97f3a",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "9522c0f3-fe29-49d0-8bf7-527c9449ffe1",
+            "name": "Atualizar Aluno",
+            "url": "http://localhost:8080/alunos/me",
+            "method": "PUT",
+            "sortNum": 110000,
+            "created": "2025-06-03T02:54:50.414Z",
+            "modified": "2025-06-03T03:54:26.424Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\": \"Aluno02 Silvaa\",\n  \"email\": \"aluno2@aluno.com\",\n  \"dataNascimento\": \"1998-07-21\",\n  \"senhaAtual\" : \"12345\",\n  \"senhaNova\" : \"12345\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbHVubzJAYWx1bm8uY29tIiwicm9sZXMiOlsiUk9MRV9VU1VBUklPIl0sImlhdCI6MTc0ODkyMjc2MiwiZXhwIjoxNzQ4OTU4NzYyfQ.cw-9tvNOiYA9NDK38tRwWywilsCHgx0On3iBftHzwhk"
+            }
+        },
+        {
+            "_id": "ee20bb21-3a41-47d1-a6af-da5e2dbcb62b",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "1bb9399f-c225-401d-8f61-a5df23a2ec66",
+            "name": "Atualizar Escola",
+            "url": "http://localhost:8080/escolas/me",
+            "method": "PUT",
+            "sortNum": 120000,
+            "created": "2025-06-03T03:17:09.636Z",
+            "modified": "2025-06-03T03:47:51.414Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nome\" : \"Escola de Referência 1\",\n  \"email\" : \"escola@escola.com\",\n  \"cnpj\" : \"7862171287211\",\n  \"telefone\" : \"8131313131\",\n  \"diretor\" : \"Lucas\",\n  \"senhaAtual\" : \"12345\",\n  \"senhaNova\" : \"12345\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlc2NvbGFhQGVzY29sYS5jb20iLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc0ODkyMjQ2MCwiZXhwIjoxNzQ4OTU4NDYwfQ.8scFHq1cBiaI8m8M77ITA5DGDuO3QNzqlEO3mzC2mP8"
+            }
+        },
+        {
+            "_id": "2a786678-5c7f-4556-a279-8a05ce0eea68",
+            "colId": "10f0592c-72d0-478e-895b-9f085bb74e57",
+            "containerId": "2979fa46-04a7-4a40-bf39-32d98b4fedae",
+            "name": "Atualizar Evento",
+            "url": "http://localhost:8080/eventos/125826b6-30bf-40fe-a2c2-a9bf3d4c9467",
+            "method": "PUT",
+            "sortNum": 150000,
+            "created": "2025-06-04T02:06:01.359Z",
+            "modified": "2025-06-04T02:07:46.044Z",
+            "headers": []
+        }
+    ],
+    "ref": "ZtXZ7QxjnYO-ubRBnefAY5wGsW6UhloEKf_IwZdlV8LLRDExkrT0GQeYVxUXQNo4RNQoasBh8aF2ROmIzhZlDA"
+}
