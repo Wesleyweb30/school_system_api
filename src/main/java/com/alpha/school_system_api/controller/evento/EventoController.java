@@ -21,14 +21,17 @@ public class EventoController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<?> criarEvento(@RequestBody RequestRegisterEvento req) {
+    public ResponseEntity<?> criarEvento(@RequestBody RequestRegisterEvento req, Authentication authentication) {
+        if (req.getNome() == null || req.getData() == null || req.getCep() == null) {
+            return ResponseEntity.badRequest().body("Dados incompletos para criar o evento.");
+        }
         try {
-            eventoService.criarEvento(req);
+            eventoService.criarEvento(req, authentication.getName());
             return ResponseEntity.status(201).body("Evento criado com sucesso.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro interno ao criar evento.");
+            return ResponseEntity.status(500).body("Erro interno ao criar evento." + e.getMessage());
         }
     }
 
@@ -36,6 +39,20 @@ public class EventoController {
     @GetMapping
     public ResponseEntity<List<EventoDTO>> listar() {
         return ResponseEntity.ok(eventoService.listarEventos());
+    }
+
+    @GetMapping("/por-escola")
+    public ResponseEntity<?> listarEventosPorEscola(
+            @RequestParam(required = false) UUID id,
+            @RequestParam(required = false) String email) {
+        try {
+            List<EventoDTO> eventos = eventoService.listarEventosPorEscola(
+                    Optional.ofNullable(id),
+                    Optional.ofNullable(email));
+            return ResponseEntity.ok(eventos);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PreAuthorize("hasRole('ROLE_USUARIO')")

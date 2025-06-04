@@ -1,6 +1,7 @@
 package com.alpha.school_system_api.service;
 
 import com.alpha.school_system_api.dtos.escola.RequestUpdateEscolaDTO;
+import com.alpha.school_system_api.dtos.evento.EventoDTO;
 import com.alpha.school_system_api.dtos.escola.EscolaDTO;
 import com.alpha.school_system_api.model.Escola;
 import com.alpha.school_system_api.model.usuario.Usuario;
@@ -11,7 +12,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class EscolaService {
@@ -27,7 +27,19 @@ public class EscolaService {
 
     public List<EscolaDTO> listarTodas() {
         return escolaRepo.findAll().stream()
-                .map(escola -> new EscolaDTO(escola.getId(), escola.getNome(), escola.getCnpj(), escola.getTelefone(), escola.getDiretor()))
+                .map(escola -> {
+                    List<EventoDTO> eventos = escola.getEventos().stream()
+                            .map(EventoDTO::new) // Usa o construtor que você já fez
+                            .toList();
+
+                    return new EscolaDTO(
+                            escola.getId(),
+                            escola.getNome(),
+                            escola.getCnpj(),
+                            escola.getTelefone(),
+                            escola.getDiretor(),
+                            eventos);
+                })
                 .toList();
     }
 
@@ -52,6 +64,16 @@ public class EscolaService {
         escolaRepo.save(escola);
         usuarioService.atualizarUsuario(usuario);
 
-        return new EscolaDTO(escola.getId(), escola.getNome(), escola.getCnpj(), escola.getTelefone(), escola.getDiretor());
+        List<EventoDTO> eventos = escola.getEventos().stream()
+                .map(EventoDTO::new)
+                .toList();
+
+        return new EscolaDTO(
+                escola.getId(),
+                escola.getNome(),
+                escola.getCnpj(),
+                escola.getTelefone(),
+                escola.getDiretor(),
+                eventos);
     }
 }

@@ -13,4 +13,5 @@ import com.alpha.school_system_api.model.usuario.Usuario;
 public interface EscolaRepository extends JpaRepository<Escola, UUID> {
     Optional<Escola> findByUsuario(Usuario usuario);
     Optional<Escola> findByUsuarioEmail(String email);
+
 }

@@ -26,13 +26,21 @@ public class EventoService {
     private UsuarioRepository usuarioRepo;
 
     @Autowired
+    private EscolaRepository escolaRepo;
+
+    @Autowired
     private ViaCepService viaCepService;
 
-    public void criarEvento(RequestRegisterEvento req) {
+    public void criarEvento(RequestRegisterEvento req, String emailUsuario) {
+
+        // System.out.println("Email do usuário: " + emailUsuario);
+        Escola escola = this.escolaRepo.findByUsuarioEmail(emailUsuario)
+                .orElseThrow(() -> new IllegalArgumentException("Escola não encontrada"));
+
         Evento evento = new Evento();
         evento.setNome(req.getNome());
         evento.setData(req.getData());
-
+        evento.setEscola(escola);
         Map<String, String> dados = viaCepService.buscarEnderecoPorCep(req.getCep());
 
         Endereco endereco = new Endereco();
@@ -50,6 +58,26 @@ public class EventoService {
 
     public List<EventoDTO> listarEventos() {
         return eventoRepository.findAll().stream()
+                .map(EventoDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<EventoDTO> listarEventosPorEscola(Optional<UUID> escolaIdOpt, Optional<String> emailOpt) {
+        Escola escola = null;
+
+        if (escolaIdOpt.isPresent()) {
+            escola = escolaRepo.findById(escolaIdOpt.get())
+                    .orElseThrow(() -> new RuntimeException("Escola não encontrada com ID"));
+        } else if (emailOpt.isPresent()) {
+            escola = escolaRepo.findByUsuarioEmail(emailOpt.get())
+                    .orElseThrow(() -> new RuntimeException("Escola não encontrada com email"));
+        } else {
+            throw new IllegalArgumentException("ID ou email da escola deve ser fornecido");
+        }
+
+        return eventoRepository.findByEscola(escola)
+                .orElseThrow(() -> new RuntimeException("Nenhum evento encontrado para a escola"))
+                .stream()
                 .map(EventoDTO::new)
                 .collect(Collectors.toList());
     }
